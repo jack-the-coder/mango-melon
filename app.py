@@ -208,7 +208,7 @@ def before():
     g.user = current_user
     g.db = DB
     g.db.connect()
-    g.db.create_tables([User, Post, Comment, Relationship], safe=True)
+    g.db.create_tables([User, Post], safe=True)
 
     url = sub('http://', 'https://', request.url)
     if 'http://' in request.url and 'HEROKU' in os.environ:
