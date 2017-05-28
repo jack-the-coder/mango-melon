@@ -17,7 +17,7 @@ from flask_bcrypt import check_password_hash
 
 
 app = Flask(__name__)
-app.secret_key = os.environ('skey0')
+app.secret_key = os.environ['skey0']
 
 
 # class AuthView(ModelView):
