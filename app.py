@@ -94,4 +94,132 @@ def sign_in(action=None):
                     try:
                         return redirect(url_for(action))
                     except BuildError:
-                        # line 142 
+                        flash('Error: No action to verify. ')
+                        return redirect(url_for('index'))
+                login_user(user, remember=form.remember.data)
+                flash('Login successful. ')
+                return redirect(url_for('index'))
+            else:
+                flash('The username or password is incorect. ')
+    return render_template('signin.html', form=form, text=other_text)
+
+
+@app.route('/signout')
+@login_required
+def sign_out():
+    logout_user()
+    flash('Logout successful. ')
+    return redirect(url_for('index'))
+
+
+@app.route('/post', methods=['GET', 'POST'])
+@login_required
+def post():
+    form = PostForm()
+    if form.validate_on_submit():
+        if request.files['content']:
+            if 'image' in request.files['content'].content_type:
+                file_u = request.files['content'].read()
+                if getsizeof(file_u) <= 5000000:
+                    file_a = 'data:{};base64,{}'.format(request.files['content'].content_type,
+                                                        encode(file_u, 'base64').decode('utf-8'))
+                    post_create = Post.create(user=g.user.id, data=file_a)
+                    flash('Posted. ')
+                    return redirect(url_for('index'))
+                else:
+                    flash('Image is bigger than 5 mb. ')
+        else:
+            flash('The upload is not an image. ')
+    return render_template('post.html', form=form)
+
+@app.route('/user')
+@app.route('/user/<username>')
+@login_required
+def user_view(username=None):
+    try:
+        if username:
+            user = User.get(User.username ** username)
+        else:
+            user = User.get(User.username ** request.values['user'])
+    except DoesNotExist:
+        abort(406)
+    except KeyError:
+        abort(400)
+    else:
+        posts = Post.select().where(Post.user == user)
+        return render_template('index.html', user=user, posts=posts)
+
+
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    if request.method == 'POST':
+        user = g.user
+        if request.form['bio'] != '':
+            if len(request.form['bio']) <= 512:
+                user.bio = request.form['bio']
+                user.save()
+                flash('Bio set!')
+            else:
+                flash('Bio is too long (over 152 characters). ')
+        if request.files['avatar']:
+            if 'image' in request.files['avatar'].content_type:
+                file_u = request.files['avatar'].read()
+                if getsizeof(file_u) <= 3000000:
+                    file_a = 'data:{};base64,{}'.format(request.files['avatar'].content_type,
+                                                        encode(file_u, 'base64').decode('utf-8'))
+                    g.user.avatar = file_a
+                    g.user.save()
+                    flash('Avatar set. ')
+                else:
+                    flash('Avatar is bigger than 3 mb. ')
+            else:
+                flash('Avatar is not an image. ')
+
+    return render_template('settings.html')
+
+@app.errorhandler(404)
+def e404(error):
+    print(error)
+    return render_template('layout.html', error_head='404',
+                           error_message='Page not found. You may have clicked on a bad link. ',
+                           error_link='/', error_link_m='Back home'), 404
+
+
+@app.errorhandler(406)
+def e406(error):
+    print(error)
+    return render_template('layout.html', error_head='406',
+                           error_message='The requested user does not exist. ',
+                           error_link='/', error_link_m='Back home'), 406
+
+
+@app.errorhandler(500)
+def e500(error):
+    print(error)
+    return render_template('layout.html', error_head='500',
+                           error_message='The server had an internal error. If it persists, contact the administrator user with information. ',
+                           error_link='/',
+                           error_link_m='Back home'), 500
+
+
+@app.before_request
+def before():
+    g.user = current_user
+    g.db = DB
+    g.db.connect()
+    g.db.create_tables([User, Post, Comment, Relationship], safe=True)
+
+    url = sub('http://', 'https://', request.url)
+    if 'http://' in request.url and 'HEROKU' in environ:
+        return redirect(url)
+
+
+@app.after_request
+def after(response):
+    g.db.close()
+    return response
+
+
+if __name__ == '__main__':
+    app.run(debug=False, host='0.0.0.0', port=8080)
