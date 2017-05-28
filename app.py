@@ -12,27 +12,27 @@ from werkzeug.exceptions import BadRequest
 from flask import Flask, flash, redirect, url_for, render_template, g, abort, request
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask_bcrypt import check_password_hash
-from flask_admin import Admin
-from flask_admin.conrib.peewee import ModelView
+# from flask_admin import Admin
+# from flask_admin.conrib.peewee import ModelView
 
 
 app = Flask(__name__)
 app.secret_key = environ('skey0')
 
 
-class AuthView(ModelView):
-    column_exclude_list = ('avatar', 'password')
-    form_excluded_columns = ['avatar']
-
-    def is_accessible(self):
-        if 'HEROKU' in environ:
-            return current_user.is_authenticated and (g.user.username == environ['admin'])
-        else:
-            return current_user.is_authenticated
-
-admin = Admin(app, name='PMM Admin')
-admin.add_view(AuthView(User, 'User'))
-admin.add_view(AuthView(Post, 'Post'))
+# class AuthView(ModelView):
+#    column_exclude_list = ('avatar', 'password')
+#    form_excluded_columns = ['avatar']
+#
+#    def is_accessible(self):
+#        if 'HEROKU' in environ:
+#            return current_user.is_authenticated and (g.user.username == environ['admin'])
+#        else:
+#            return current_user.is_authenticated
+#
+#admin = Admin(app, name='PMM Admin')
+#admin.add_view(AuthView(User, 'User'))
+#admin.add_view(AuthView(Post, 'Post'))
 
 login_manager = LoginManager()
 login_manager.init_app(app)
