@@ -39,7 +39,7 @@ class User(UserMixin, Model):
                                'MS3NVL52+/PsjRksn5q/dX3IgAAAAAAAAAAAAAAAAAAAAAA3m5N8XNTiy14opqZqnzh9ufdGjJY/wA0/un7gYfU'
                                'wAAAAAAAAAAAAAAAAAAAAAAADK6mAB//2Q==')
     joined_at = DateTimeField(default=datetime.datetime.now)
-    bio = TextField(default='This person has not set a bio, yet. )
+    bio = TextField(default='This person has not set a bio, yet. ')
     default_view = CharField(default='popular')
 
     def __str__(self):
