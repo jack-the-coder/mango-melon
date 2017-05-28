@@ -1,4 +1,4 @@
-from os import environ
+import os
 from re import sub
 from codecs import encode
 from sys import getsizeof
@@ -17,7 +17,7 @@ from flask_bcrypt import check_password_hash
 
 
 app = Flask(__name__)
-app.secret_key = environ('skey0')
+app.secret_key = os.environ('skey0')
 
 
 # class AuthView(ModelView):
@@ -211,7 +211,7 @@ def before():
     g.db.create_tables([User, Post, Comment, Relationship], safe=True)
 
     url = sub('http://', 'https://', request.url)
-    if 'http://' in request.url and 'HEROKU' in environ:
+    if 'http://' in request.url and 'HEROKU' in os.environ:
         return redirect(url)
 
 
