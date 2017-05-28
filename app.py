@@ -49,7 +49,7 @@ def load_user(id):
 @app.route('/')
 def index(page=1):
     posts = None
-    if current_user.is_authentiacted:
+    if current_user.is_authenticated:
         posts = Post.select().paginate(page, 255)
     return render_template('index.html', posts=posts, page=page)
 
