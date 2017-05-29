@@ -44,36 +44,21 @@
           <div data-page="index" class="page">
             <!-- Scrollable page content-->
             <div class="page-content">
-              <div class="content-block-title">blah BLAH blah</div>
-              <div class="content-block">
-                <div class="content-block-inner">
-                  <p>LOREM is really IPSUM more psuedolatin </p>
-                  <p>Duis sed erat ac eros ultrices pharetra id ut tellus. Praesent rhoncus enim ornare ipsum aliquet ultricies. Pellentesque sodales erat quis elementum sagittis.</p>
-                </div>
-              </div>
-              <div class="content-block-title">Navigation</div>
-              <div class="list-block">
-                <ul>
-                  <li><a href="about.html" class="item-link">
-                      <div class="item-content">
-                        <div class="item-inner">
-                          <div class="item-title">About</div>
-                        </div>
-                      </div></a></li>
-                  <li><a href="services.html" class="item-link">
-                      <div class="item-content">
-                        <div class="item-inner">
-                          <div class="item-title">Services</div>
-                        </div>
-                      </div></a></li>
-                  <li><a href="form.html" class="item-link">
-                      <div class="item-content">
-                        <div class="item-inner">
-                          <div class="item-title">Form</div>
-                        </div>
-                      </div></a></li>
-                </ul>
-              </div>
+              {% for message in get_flashed_messages() %}
+        			<div class='message'>{{ message }}</div>
+        		{% endfor %}
+        		<br>
+        		{% block body %}
+        			{% if error_head and error_message  %}
+        				<div class="container">
+        					<h1>{{ error_head }}</h1>
+        					<p>{{ error_message }}</p>
+        					{% if error_link and error_link_m %}
+        						<a href={{ error_link }}>{{ error_link_m }}</a>
+        					{% endif %}
+        				</div>
+        			{% endif %}
+        		{% endblock %}
               <div class="content-block-title">Side panels</div>
               <div class="content-block">
                 <div class="row">
