@@ -4,12 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>Project Mango Melon</title>
     <!-- Path to Framework7 Library CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='framework7.ios.min.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='framework7.ios.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='framewor7.ios.colors.min.css')}}">
     <!-- Path to your custom app styles-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='my-app.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='my-app.css')}}">
   </head>
   <body>
     <!-- Status bar overlay for fullscreen mode-->
@@ -23,6 +24,7 @@
       </div>
     </div>
 
+    <!-- Views-->
     <div class="views">
       <!-- Your main view, should have "view-main" class-->
       <div class="view view-main">
@@ -42,15 +44,37 @@
           <div data-page="index" class="page">
             <!-- Scrollable page content-->
             <div class="page-content">
-              <div class="content-block-title">Welcome to Project Mango Melon</div>
+              <div class="content-block-title">blah BLAH blah</div>
               <div class="content-block">
                 <div class="content-block-inner">
-                  <p>Project Mango Melon is a photo based social network. Check it out!</p>
-                  <p>To sign up or sign in, press the respective buttons on the bottom of the app. </p>
+                  <p>LOREM is really IPSUM more psuedolatin </p>
+                  <p>Duis sed erat ac eros ultrices pharetra id ut tellus. Praesent rhoncus enim ornare ipsum aliquet ultricies. Pellentesque sodales erat quis elementum sagittis.</p>
                 </div>
               </div>
-
-              <div class="content-block-title">Side panel</div>
+              <div class="content-block-title">Navigation</div>
+              <div class="list-block">
+                <ul>
+                  <li><a href="about.html" class="item-link">
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">About</div>
+                        </div>
+                      </div></a></li>
+                  <li><a href="services.html" class="item-link">
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Services</div>
+                        </div>
+                      </div></a></li>
+                  <li><a href="form.html" class="item-link">
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Form</div>
+                        </div>
+                      </div></a></li>
+                </ul>
+              </div>
+              <div class="content-block-title">Side panels</div>
               <div class="content-block">
                 <div class="row">
                   <div class="col-50"><a href="#" data-panel="left" class="button open-panel">Left Panel</a></div>
@@ -67,27 +91,8 @@
       </div>
     </div>
     <!-- Path to Framework7 Library JS-->
-    <script type="text/javascript" src="{{ url_for('static', filename='framework7.min.js') }}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='framework7.min.js')}}"></script>
     <!-- Path to your app js-->
-    <script type="text/javascript"">
-    // Initialize your app
-    var mango = new Framework7();
-
-    // Export selectors engine
-    var $$ = Dom7;
-
-    // Add view
-    var mainView = mango.addView('.view-main', {
-        // Because we use fixed-through navbar we can enable dynamic navbar
-        dynamicNavbar: true
-    });
-
-
-
-
-
-    }
-
-</script>
+    <script type="text/javascript"></script>
   </body>
 </html>
