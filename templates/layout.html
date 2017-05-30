@@ -98,6 +98,19 @@
             createContentPage();
         });
     });
+    
+    /*=== Default standalone photo Browser ===*/
+    var myPhotoBrowserStandalone = myApp.photoBrowser({
+                                                      photos : [
+                                                                'http://lorempixel.com/1024/1024/sports/1/',
+                                                                'http://lorempixel.com/1024/1024/sports/2/',
+                                                                'http://lorempixel.com/1024/1024/sports/3/',
+                                                                ]
+                                                      });
+                                                      //Open photo browser on click
+                                                      $$('.pb-standalone').on('click', function () {
+                                                                              myPhotoBrowserStandalone.open();
+                                                                              });
 
     // Generate dynamic page
     var dynamicPageIndex = 0;

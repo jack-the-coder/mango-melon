@@ -1,2 +1,15 @@
 {% extends 'layout.html' %}
-{% block body %}<h1>INDEX</h1>{% endblock %}
+{% block body %}
+
+{% if not current_user.is_authenticated %}
+<h1>Logged OUT</h1>
+<div class="col-33"><a href="#" class="button pb-standalone">Open Photos</a></div>
+
+{% else %}
+
+<h1>Logged IN</h1>
+
+{% endif %}
+
+
+{% endblock %}
