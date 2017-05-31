@@ -5,6 +5,29 @@
 <h1>Logged OUT</h1>
 <div class="col-33"><a href="#" class="button pb-standalone">Open Photos</a></div>
 
+<div class="list-block">
+    <ul>
+      {% if posts %}
+      {% for post in posts %}
+      <li>
+      <a href="{{ url_for('view_post', id=post.id) }}">
+  <div class="item-content">
+      <div class="item-inner">
+          <div class="item-title">
+              {{ post.user.username }}
+          </div>
+          <div class="item-after">
+              {{ post.created_at.strftime('%A, %B %d at %I:%M %p') }}
+          </div>
+        </a>
+      </div>
+  </div>
+</li>
+    {% endfor %}
+    {% endif %}
+    </ul>
+</div>
+
 {% else %}
 
 <h1>Logged IN</h1>
